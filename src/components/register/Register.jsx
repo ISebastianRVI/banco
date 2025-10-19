@@ -1,14 +1,25 @@
-// import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import "./Register.css";
 import { useState } from "react";
 
 const Register = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [nombre, setNombre] = useState("");
   const [apellidos, setApellido] = useState("");
   const [telefono, setTelefono] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+
+  const createUser = () => {
+
+    if (!nombre, !apellidos, !telefono, !email, !pass) {
+      alert('Todos los campos sin requeridos')
+    } else {
+      alert(`Bienvenido ${nombre} ${apellidos}`)
+      navigate('/inicio')
+    }
+    
+  }
 
   return (
     <div className="contenedor">
@@ -49,7 +60,7 @@ const Register = () => {
           placeholder="Contraseña"
           className="inputRegister"
         />
-        <button className="button">Crear Cuenta</button>
+        <button onClick={() => createUser()} className="button">Iniciar Cuenta</button>
 
       </div>
     </div>
