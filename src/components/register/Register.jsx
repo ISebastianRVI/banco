@@ -13,7 +13,7 @@ const Register = () => {
   const createUser = () => {
 
     if (!nombre, !apellidos, !telefono, !email, !pass) {
-      alert('Todos los campos sin requeridos')
+      alert('Todos los campos son requeridos')
     } else {
       alert(`Bienvenido ${nombre} ${apellidos}`)
       navigate('/inicio')

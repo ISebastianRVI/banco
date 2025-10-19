@@ -1,0 +1,268 @@
+:root {
+  --bg: #f5f7ff;
+  --card: #ffffff;
+  --ink: #0f1222;
+  --muted: #7b8191;
+  --line: #e9ecf3;
+  --brand: #5b6cff;
+  --ok: #29c26a;
+  --warn: #f0b429;
+  --bad: #ff5a6b;
+  --shadow: 0 6px 18px rgba(15, 18, 34, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+    "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--card);
+  border-right: 1px solid var(--line);
+  padding: 18px 16px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 6px 4px 18px;
+}
+.logo {
+  color: var(--brand);
+  font-size: 20px;
+}
+.menu-title {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin: 18px 8px 8px;
+}
+.menu .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin: 4px 0;
+  border-radius: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+.menu .item:hover {
+  background: #f1f3ff;
+}
+.menu .active {
+  background: #eef0ff;
+  color: #2c3aff;   
+  font-weight: 600;
+}
+
+.main {
+  padding: 22px;
+}
+
+.topbar {
+  position: sticky;
+  top: 0; 
+  z-index: 10; 
+  background: var(--bg); 
+  margin: -22px -22px 18px; 
+  padding: 12px 22px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.actions button {
+  height: 36px;
+  width: 36px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+}
+.avatar {
+  height: 36px;
+  width: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.cards {
+  display: grid;
+  margin-top: 20%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.icon {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  opacity: 0.2;
+}
+.icon.morado {
+  background: #5f61ff;
+}
+.icon.amarillo {
+  background: #ffcc33;
+}
+.icon.rojo {
+  background: #ff6b6b;
+}
+.icon.verde {
+  background: #29c26a;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.card-value {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 8px 0 10px;
+}
+.card-sub {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.badge {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  background: #eaf6ef;
+  color: #1f7a44;
+  border: 1px solid #cfe9d8;
+  font-weight: 600;
+}
+.badge.down {
+  background: #ffe9ec;
+  color: #b01d2c;
+  border-color: #ffd0d7;
+}
+.muted {
+  color: var(--muted);
+}
+.small {
+  font-size: 12px;
+}
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.btn {
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+}
+
+.table-wrap {
+  overflow: auto;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th,
+.table td {
+  text-align: left;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.table thead th {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.link {
+  color: #3a4bff;
+  font-weight: 600;
+}
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.name {
+  font-weight: 600;
+}
+.estado {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.pagination {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
+.pagination button {
+  min-width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+}
+.pagination .current {
+  background: #eef0ff;
+  border-color: #d6dbff;
+}

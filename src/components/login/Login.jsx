@@ -8,7 +8,7 @@ const Login = ( ) => {
   const [pass, setPass] = useState("");
 
   const validateUser = () => {
-    if (campo == "Sebas" || campo == "Majo" || campo == "Eber") {
+    if (campo == "Sebas" || campo == "Majo" ) {
       navigate("/inicio", { state: { nombreUsuario: { campo } } })
     } else {
       alert("No acceso");
