@@ -1,0 +1,21 @@
+.Container{
+  width: 100%;
+  height: 400px;
+  background-color: lightslategrey;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+ .cardContainer{
+  width: 200px;
+  height: 250px;
+  background-color: rgb(237, 201, 201);
+  border-radius: 20px;
+ }
+#containerBox{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+
+}
