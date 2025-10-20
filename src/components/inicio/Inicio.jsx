@@ -1,4 +1,5 @@
 import "./Inicio.css";
+import { Link } from 'react-router-dom'
 
 const dataMetricas = [
   { id: "saldo", titulo: "Saldo", valor: "$2.382", delta: "+0%", tono: "morado" },
@@ -28,21 +29,21 @@ const Inicio = () => {
 
         <nav className="menu">
           <p className="menu-title">MENÚ</p>
-          <a className="item active" href="#">
+          <Link className="item active" to="/inicio">
             <span>🏠</span> Dashboard
-          </a>
-          <a className="item" href="#">
+          </Link>
+          <Link className="item" to="/reporte">
             <span>📊</span> Reportes Financieros
-          </a>
-          <a className="item" href="#">
+          </Link>
+          <Link className="item" to="/prestamos">
             <span>📝</span> Solicitudes de Préstamos
-          </a>
-          <a className="item" href="#">
+          </Link>
+          <Link className="item" to="/transacciones">
             <span>💳</span> Transacciones
-          </a>
-          <a className="item" href="#">
+          </Link>
+          <Link className="item" to="/gestion">
             <span>👤</span> Gestión de Cuentas
-          </a>
+          </Link>
         </nav>
       </aside>
 
