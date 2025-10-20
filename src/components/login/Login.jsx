@@ -17,7 +17,7 @@ const Login = ( ) => {
 
   return (
     <div id="contenedorLogin">
-      <h1>Hola, Bienvenido al Banco Estebanquito</h1>
+      <h1>Bienvenido al Banco Estebanquito</h1>
       <input
         type="text"
         value={campo}

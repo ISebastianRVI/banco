@@ -1,25 +1,24 @@
-import React from 'react'
 import "./Inicio.css";
 
 const dataMetricas = [
-  { id: "saldo", titulo: "Saldo", valor: "2.382", delta: "+0%", tono: "morado" },
+  { id: "saldo", titulo: "Saldo", valor: "$2.382", delta: "+0%", tono: "morado" },
   { id: "deudas", titulo: "Deudas", valor: "$21.300", delta: "+4.44%", tono: "amarillo", nota: "Interes de deuda" }
 ];
 
 const filas = [
-  { id: "#EKG4951", cliente: "Mona Miha", email: "example@gmail.com", creado: "26-03-2022", vence: "20-10-2023", precio: "$1,779.53" },
-  { id: "#EKG4238", cliente: "Picki Withsa", email: "example@gmail.com", creado: "06-02-2022", vence: "20-10-2023", precio: "$2,215.78" },
-  { id: "#EKG4339", cliente: "Jenny Wilson", email: "example@gmail.com", creado: "06-09-2021", vence: "20-10-2023", precio: "$3,183.60" },
-  { id: "#EKG4365", cliente: "John Doe", email: "example@gmail.com", creado: "07-11-2021", vence: "20-10-2023", precio: "$2,587.86" },
-  { id: "#EKG4513", cliente: "Emma Thompson", email: "example@gmail.com", creado: "06-05-2022", vence: "20-10-2023", precio: "$3,840.73" },
-  { id: "#EKG4534", cliente: "Michael Smith", email: "example@gmail.com", creado: "14-02-2022", vence: "20-10-2023", precio: "$4,764.18" },
-  { id: "#EKG4729", cliente: "Olivia Johnson", email: "example@gmail.com", creado: "15-08-2022", vence: "20-10-2023", precio: "$1,892.45" },
-  { id: "#EKG4831", cliente: "William Davis", email: "example@gmail.com", creado: "02-01-2022", vence: "20-10-2023", precio: "$2,165.39" },
+  { id: "1", cliente: "Juan David Zamorano", email: "example@gmail.com", creado: "26-03-2022", valor: "$1,779.53" },
+  { id: "2", cliente: "Maria Jose", email: "example@gmail.com", creado: "06-02-2022", valor: "$2,215.78" },
+  { id: "3", cliente: "Sebastian", email: "example@gmail.com", creado: "06-09-2021",  valor: "$3,183.60" },
+  { id: "4", cliente: "Juan pipi", email: "example@gmail.com", creado: "07-11-2021",  valor: "$2,587.86" },
+  { id: "5", cliente: "Eber", email: "example@gmail.com", creado: "06-05-2022",  precio: "$3,840.73" },
+  { id: "6", cliente: "Patricio Estrella", email: "example@gmail.com", creado: "14-02-2022", valor: "$4,764.18" },
+  { id: "7", cliente: "Bob Esponja", email: "example@gmail.com", creado: "15-08-2022", valor: "$1,892.45" },
+  { id: "8", cliente: "Calamardo Hermoso", email: "example@gmail.com", creado: "02-01-2022", valor: "$2,165.39" },
 ];
 
 const Inicio = () => {
   return (
-    <div className="layout">
+    <div className="contenedor">
       {/* Sidebar */}
       <aside className="sidebar">
         <div className="brand">
@@ -84,7 +83,6 @@ const Inicio = () => {
                   <th>ID</th>
                   <th>Cliente</th>
                   <th>Creado</th>
-                  <th>Vence</th>
                   <th>Precio</th>
                 </tr>
               </thead>
@@ -96,13 +94,11 @@ const Inicio = () => {
                       <div className="user">
                         <div>
                           <div className="name">{f.cliente}</div>
-                          <div className="muted small">{f.email}</div>
                         </div>
                       </div>
                     </td>
                     <td>{f.creado}</td>
-                    <td>{f.vence}</td>
-                    <td>{f.precio}</td>
+                    <td>{f.valor}</td>
                   </tr>
                 ))}
               </tbody>
