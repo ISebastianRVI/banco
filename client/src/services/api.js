@@ -46,3 +46,13 @@ export const getHistorialTransacciones = async () => {
   const response = await api.get('/transacciones/historial');
   return response.data;
 };
+
+export const solicitarPrestamo = async (monto, plazo) => {
+  const response = await api.post('/prestamos/solicitar', { monto, plazo });
+  return response.data;
+};
+
+export const getHistorialPrestamos = async () => {
+  const response = await api.get('/prestamos/historial');
+  return response.data;
+};

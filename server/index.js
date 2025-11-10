@@ -27,19 +27,34 @@ pool.connect(async (err, client, release) => {
     return;
   }
   console.log('Conexión a la base de datos establecida correctamente');
+  release();
   
-  try {
-        await client.query(`
-      ALTER TABLE transacciones 
-      ADD COLUMN IF NOT EXISTS cuenta_origen VARCHAR(255),
-      ADD COLUMN IF NOT EXISTS origen_nombre VARCHAR(255)
-    `);
-    console.log('Columnas agregadas correctamente a la tabla transacciones');
-  } catch (error) {
-    console.error('Error al agregar columnas:', error);
-  } finally {
-    release();
-  }
+  // try {
+  //   await client.query(`
+  //     ALTER TABLE transacciones 
+  //     ADD COLUMN IF NOT EXISTS cuenta_origen VARCHAR(255),
+  //     ADD COLUMN IF NOT EXISTS origen_nombre VARCHAR(255)
+  //   `);
+  //   console.log('Columnas agregadas correctamente a la tabla transacciones');
+
+  //   // Crear tabla de préstamos
+  //   await client.query(`
+  //     CREATE TABLE IF NOT EXISTS prestamos (
+  //       id SERIAL PRIMARY KEY,
+  //       usuario_id INT NOT NULL,
+  //       monto DECIMAL(10, 2) NOT NULL,
+  //       plazo INT NOT NULL,
+  //       estado VARCHAR(50) NOT NULL DEFAULT 'pendiente',
+  //       fecha_solicitud TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  //       FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+  //     )
+  //   `);
+  //   console.log('Tabla prestamos creada correctamente');
+  // } catch (error) {
+  //   console.error('Error al crear tabla o agregar columnas:', error);
+  // } finally {
+  //   release();
+  // }
 });
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; 
@@ -225,6 +240,69 @@ app.get('/api/transacciones/historial', authenticateToken, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error al obtener historial' });
+  }
+});
+
+app.post('/api/prestamos/solicitar', authenticateToken, async (req, res) => {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const { monto, plazo } = req.body;
+
+    if (!monto || !plazo) {
+      return res.status(400).json({ error: 'Monto y plazo son requeridos' });
+    }
+
+    const prestamResult = await client.query(
+      'INSERT INTO prestamos (usuario_id, monto, plazo, estado) VALUES ($1, $2, $3, $4) RETURNING id',
+      [req.user.id, monto, plazo, 'pendiente']
+    );
+
+    await client.query(
+      'UPDATE cuentas SET saldo = saldo + $1 WHERE usuario_id = $2',
+      [monto, req.user.id]
+    );
+
+    await client.query(
+      'UPDATE prestamos SET estado = $1 WHERE id = $2',
+      ['aprobado', prestamResult.rows[0].id]
+    );
+
+    const userResult = await client.query(
+      'SELECT nombre FROM usuarios WHERE id = $1',
+      [req.user.id]
+    );
+    const userName = userResult.rows[0].nombre;
+
+    await client.query(
+      'INSERT INTO transacciones (usuario_id, tipo, monto, cuenta_destino, origen_nombre) VALUES ($1, $2, $3, $4, $5)',
+      [req.user.id, 'PRESTAMO', monto, 'Préstamo Personal', userName]
+    );
+
+    await client.query('COMMIT');
+    res.json({ 
+      message: 'Préstamo solicitado y aprobado exitosamente',
+      prestamo_id: prestamResult.rows[0].id
+    });
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  } finally {
+    client.release();
+  }
+});
+
+app.get('/api/prestamos/historial', authenticateToken, async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT * FROM prestamos WHERE usuario_id = $1 ORDER BY fecha_solicitud DESC',
+      [req.user.id]
+    );
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener historial de préstamos' });
   }
 });
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getSaldo, realizarTransferencia, getHistorialTransacciones } from '../services/api';
+import { getSaldo, realizarTransferencia, getHistorialTransacciones, solicitarPrestamo } from '../services/api';
 import {
   Box,
   Container,
@@ -22,6 +22,7 @@ const Dashboard = () => {
   const [saldo, setSaldo] = useState(0);
   const [numeroCuenta, setNumeroCuenta] = useState('');
   const [transferencia, setTransferencia] = useState({ monto: '', cuenta_destino: '' });
+  const [prestamo, setPrestamo] = useState({ monto: '', plazo: '' });
   const [historial, setHistorial] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -64,6 +65,23 @@ const Dashboard = () => {
       setError('');
     } catch (error) {
       setError('Error al realizar la transferencia'), error;
+    }
+  };
+
+  const handlePrestamo = async (e) => {
+    e.preventDefault();
+    try {
+      await solicitarPrestamo(parseFloat(prestamo.monto), parseInt(prestamo.plazo));
+      const [saldoData, historialData] = await Promise.all([
+        getSaldo(),
+        getHistorialTransacciones(),
+      ]);
+      setSaldo(saldoData.saldo);
+      setHistorial(historialData);
+      setPrestamo({ monto: '', plazo: '' });
+      setError('');
+    } catch (error) {
+      setError('Error al solicitar préstamo'), error;
     }
   };
 
@@ -146,6 +164,61 @@ const Dashboard = () => {
                     size="large"
                   >
                     Transferir
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+            {error && (
+              <Typography color="error" sx={{ mt: 2 }}>
+                {error}
+              </Typography>
+            )}
+          </Paper>
+        </Grid>
+
+        {/* Formulario de préstamo */}
+        <Grid item xs={12} md={6}>
+          <Paper sx={{ p: 3 }}>
+            <Typography variant="h6" gutterBottom>
+              Solicitar Préstamo
+            </Typography>
+            <Box component="form" onSubmit={handlePrestamo}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    label="Monto"
+                    type="number"
+                    value={prestamo.monto}
+                    onChange={(e) =>
+                      setPrestamo({ ...prestamo, monto: e.target.value })
+                    }
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    label="Plazo (meses)"
+                    type="number"
+                    value={prestamo.plazo}
+                    onChange={(e) =>
+                      setPrestamo({
+                        ...prestamo,
+                        plazo: e.target.value,
+                      })
+                    }
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    size="large"
+                  >
+                    Solicitar Préstamo
                   </Button>
                 </Grid>
               </Grid>
