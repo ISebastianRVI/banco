@@ -171,7 +171,8 @@ const Dashboard = () => {
                     <TableCell>Fecha</TableCell>
                     <TableCell>Tipo</TableCell>
                     <TableCell>Monto</TableCell>
-                    <TableCell>Cuenta Destino</TableCell>
+                    <TableCell>Cuenta</TableCell>
+                    <TableCell>Origen</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -184,7 +185,8 @@ const Dashboard = () => {
                       <TableCell>
                         ${transaccion.monto.toLocaleString()}
                       </TableCell>
-                      <TableCell>{transaccion.cuenta_destino}</TableCell>
+                      <TableCell>{transaccion.tipo === 'DEPOSITO' ? transaccion.cuenta_origen : transaccion.cuenta_destino}</TableCell>
+                      <TableCell>{transaccion.origen_nombre || '-'}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
